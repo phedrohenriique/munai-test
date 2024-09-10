@@ -1,8 +1,8 @@
 import uvicorn
+import routes
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
-from routes import *
 
 # @asynccontextmanager
 # async def lifespan(app:FastAPI):
@@ -20,8 +20,8 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-app.include_router(server.router)
-app.include_router(patients.router)
+app.include_router(routes.router_server)
+app.include_router(routes.router_patients)
 
 
 if __name__ == "__main__":

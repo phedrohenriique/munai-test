@@ -1,13 +1,16 @@
-from fastapi import APIRouter, FastAPI
-from controllers.patients import get_patients_list
+from fastapi import APIRouter, FastAPI, UploadFile
+from controllers import patients
 
 app = FastAPI()
-router = APIRouter()
+router_patients = APIRouter()
 
-
-@router.get("/patients")
-async def get_server_status():
-    server_response =  await get_patients_list()
+@router_patients.get("/patients")
+async def get_patients_list():
+    server_response = await patients.get_patients_list()
     return server_response
-    
-        
+
+
+@router_patients.post("/patients/file")
+async def post_patients_file(file: UploadFile):
+    server_response = await patients.extract_data_from_csv(file)
+    return server_response
